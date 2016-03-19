@@ -1,0 +1,224 @@
+
+<html>
+<head>
+<title> CS440/640 Homework Template: HW[x] Student Name [xxx]  </title>
+<style>
+<!--
+body{
+font-family: 'Trebuchet MS', Verdana;
+}
+p{
+font-family: 'Trebuchet MS', Times;
+margin: 10px 10px 15px 20px;
+}
+h3{
+margin: 5px;
+}
+h2{
+margin: 10px;
+}
+h1{
+margin: 10px 0px 0px 20px;
+}
+div.main-body{
+align:center;
+margin: 30px;
+}
+hr{
+margin:20px 0px 20px 0px;
+}
+-->
+</style>
+</head>
+
+<body>
+<center>
+<a href="http://www.bu.edu"><img border="0" src="http://www.cs.bu.edu/fac/betke/images/bu-logo.gif"
+width="119" height="120"></a>
+</center>
+
+<h1>Assignment Title</h1>
+<p> 
+CS 440 P1 <br>
+Yizhi Huang<br>
+Yue Zhou, Annalisa Chen, Yingqiao Xiong <br>
+Feb 9th 2016
+</p>
+
+<div class="main-body">
+<hr>
+<h2> Problem Definition </h2>
+<p>
+Give a concise description of current problem. For instance, what
+needs to be solved and why it is useful?  Do you make any assumptions?
+What are the difficulties?
+</p>
+<p>
+Our project is focusing on detecting hand gestures. To be more specific, the main goal is to find the number of fingles that can be recognized in the video frame. In order to do it, we must firstly find the convex hull of the hand. This step is crucial because once we get the convex hull of hand, we can find the convexity defects of the hand, and then use the convexity defects to locate the finger tips and calculate the depth of defects. These two data will be evaluated to determine whether there is a finger by comparing to template values. However, the difficulty of our project has raised since the input value, the frame of hand, varies dramatically since the hand's feature of every individual is distinctive. So, it is hard to find a template which can match with most imput values. As the result, the inaccuracy of our project is inevitable but can be reduced by choosing the most appropriate value as template. Then, we make several assumptions: </p> 
+<ol>
+  <li>There is only one hand in the frame and no human face or any other objects. </li>
+  <li>Any skin part below the wrist should be covered and the hand should be within a reasonable distance from the camera. Moreover, we assume that a hand could either move horizontally,vertically or stay and do one to five gestures.</li> 
+  <li>The depth of defects has a threshold value of 8. </li>
+  <li>The horizontal position of every fingle tip has to be higher than that of the center of hand. </li> 
+</ol> 
+<p>
+Moreover, our project can change the background color of video frame based on the action of hand. If the hand moves vertically, the frame color will turn green, or red if the hand moves horizontally. In order to let make the program know if the hand is moving vertically or horizontally, we need to utilizie the histogram projection of moion energy. 
+</p>  
+<hr>
+<h2> Method and Implementation </h2>
+<p>Give a concise description of the implemented method. For example, you might describe the motivation of current idea, the algorithmic steps or any formulation used in current method.
+</p>
+<p>
+Briefly outline the functions you created in your code to carry out your algorithmic steps described above.
+</p>
+<p>
+Finger counting:
+We blur the frame first and then turn it into a binary(thresold or black/white) image. After that, we turn the white blobs into contours and find the largest contour out of it, which should be a hand. Then we based on the largest contour to draw out the convex hull and convexity defects of the hand. By getting the convexity defects, we could also use a for loop to go through all the defects in the hand to figure out each finger tip location and the depth of the each defect. If the depth of a defect is larger than some amount and the the location the finger tip is above the location of the center of the hand, we start counting fingers. 
+</p>
+<p>
+Color changing:
+We firstly calculate the motion energy by comparing consecutive frames to get a motion histogram. In the MH, the <em>white plot</em> indicates an changement of motion energy. After that, we use a nested for loop to go through each pixel in the MH frame, and cumulate the horizontal or vertical "while plot". If the result is larger than the threshold value, it will be recognized as a movement in the input video frame. The frame color will turn red if it is a horizontal movement. Otherwise, the frame color would be green. 
+</p>
+<hr>
+<h2>Experiments</h2>
+<p>
+Describe your experiments, including the number of tests that you
+performed, and the relevant parameter values.  </p>
+<p>
+Define your evaluation
+metrics, e.g., detection rates, accuracy, running time. </p>
+<p>
+The confusion matrix of fingle gesture <img src="FingleGesture.png" alt="result of fingle gesture" />
+</p>
+<p>
+Accuracy = (TP + TN) / (P + N) = (8 + 7) / 20 = 0.75
+</p>
+<p>  
+The confusion matrix of background color changing <img src="Background.png" alt="result of background" />
+</p>
+<p>
+Accuracy = (10 + 9 + 7 + 8 + 10) / 50 = 0.88
+</p> 
+<hr>
+<h2> Results</h2>
+<p>
+List your experimental results.  Provide examples of input images and output
+images. If relevant, you may provide images showing any intermediate steps
+</p>
+
+<p>
+<table>
+<tr><td colspan=3><center><h3>Results</h3></center></td></tr>
+<tr>
+<td> Trial </td><td> Source Image </td> <td> Result Image</td> 
+</tr>
+<tr>
+  <td> trial 1 </td> 
+  <td> <img src="1a.jpg"> </td> 
+  <td> <img src="1b.jpg"> </td>
+</tr> 
+<tr>
+  <td> trial 2 </td> 
+  <td> <img src="2a.jpg"> </td> 
+  <td> <img src="2b.jpg"> </td>
+</tr> 
+<tr>
+  <td> trial 3 </td> 
+  <td> <img src="3a.jpg"> </td> 
+  <td> <img src="3b.jpg"> </td>
+</tr> 
+<tr>
+  <td> trial 4 </td> 
+  <td> <img src="4a.jpg"> </td> 
+  <td> <img src="4b.jpg"> </td>
+</tr> 
+<tr>
+  <td> trial 5 </td> 
+  <td> <img src="5a.jpg"> </td> 
+  <td> <img src="5b.jpg"> </td>
+</tr> 
+<tr>
+  <td> trial 6 </td> 
+  <td> <img src="greena.jpg"> </td> 
+  <td> <img src="greenb.jpg"> </td>
+</tr> 
+<tr>
+  <td> trial 7 </td> 
+  <td> <img src="reda.jpg"> </td> 
+  <td> <img src="redb.jpg"> </td>
+</tr> 
+</table>
+</p>
+
+
+
+<hr>
+<h2> Discussion </h2>
+
+<p> 
+Discuss your method and results:
+<ul>
+<li>What are the strengths and weaknesses of your method? </li>
+<li>Do your results show that your method is generally successful or
+     are there limitations? Describe what you expected to find in your
+     experiments, and how that differed or was confirmed by your
+     results. </li>
+<li>Potential future work. How could your method be improved?   What
+would you try (if you had more time) to overcome the
+failures/limitations of your work?</li> 
+</ul>
+</p>
+<p>
+The method we use in counting fingles works well on finding the contour and convex hull of the hand. But it performs weakly on locate the fingle tips because many factors can affect the result, such like the position of hand, the distance of hand to camera, the size of hand, the length of each fingle, the background, lighting, etc.. These uncertainties contribute to the result that the number of fingle detected would be inaccurate. 
+</p>
+<p>
+The method we use in background color change works well to show either the hand is moving horizontally or vertically. But it performs weakly when the speed of movement is inconsistant. That means a moevment with rapid accerlaration sometimes cannot be detected.
+</p>  
+<p>
+The result of confusion matrix indicates that the overall performance is well since the accuracy is much higher than 50%. We expect that the accuracy of background color changing will be higher than that of fingle counting since there are less uncertain factors which could affect the determination, and the result agrees with our assumption.
+</p>
+<p>
+For the future work, we can improve our method by setting more reasonable thresholds based on the data we get from previous experiments. Also, we could work on detecting the frame of 2 hands or more gestures. 
+</p>  
+<hr>
+<h2> Conclusions </h2>
+
+<p>
+Based on your discussion, what are your conclusions?  What is your
+main message?
+</p>
+<p>
+Based on the discussion, we could draw the conclusion that our project is working successfully on counting fingles and detecting hand movement. The inaccuracy still exists due to some uncertain factors, template and threshold values. But if we have more time and opportunity, we can improve our project in the future work. 
+</p> 
+
+<hr>
+<h2> Credits and Bibliography </h2>
+<p>
+
+Cite any papers or other references you consulted while developing
+your solution.  Citations to papers should include the authors, the
+year of publication, the title of the work, and the publication
+information (e.g., book name and publisher; conference proceedings and
+location; journal name, volume and pages; technical report and
+institution).  Material on the web should include the url and date of
+access.
+</p>
+<p>
+Credit any joint work or discussions with your classmates. 
+</p>
+<p>
+Citations:</p>
+<p>
+Shaminda, Dilan. "Beginner's Guide to Understand Fingertips Counting Using Convexity Defects in OpenCV." - CodeProject. Web. 06 Feb. 2016. <http://www.codeproject.com/Articles/782602/Beginners-guide-to-understand-Fingertips-counting>.</p>
+<p>
+Calin, Dragos George. "9 OpenCV Tutorials to Detect and Recognize Hand Gestures." Into Robotics. Web. 06 Feb. 2016. <http://www.intorobotics.com/9-opencv-tutorials-hand-gesture-detection-recognition/>.</p>
+<p>
+Andresen, Simen. "Hand Tracking And Recognition with OpenCV -." Hand Tracking And Recognition with OpenCV -. Web. 06 Feb. 2016. <http://simena86.github.io/blog/2013/08/12/hand-tracking-and-recognition-with-opencv/>.
+</p>
+<hr>
+</div>
+</body>
+
+
+
+</html>
